@@ -5,17 +5,17 @@ var UglifyJS = require("uglify-js");
 
 function scaleData ( input, shouldUglify ) {
     var sizes = {
-        untransformed: bytes( input.length )
+        untransformed: bytes( input.length, { units: null } )
     };
     var gzipped = zlib.gzipSync( input );
-    sizes.gzipped = gzipped.length;
+    sizes.gzipped = bytes( gzipped.length, { units: null } );
 
 
     if ( shouldUglify ) {
         var uglified = UglifyJS.minify(input, {fromString: true}).code;
-        sizes.uglified = bytes( uglified.length );
+        sizes.uglified = bytes( uglified.length, { units: null } );
         var uglifiedAndGzipped = zlib.gzipSync( uglified );
-        sizes.uglifiedAndGzipped = uglifiedAndGzipped.length;
+        sizes.uglifiedAndGzipped = bytes( uglifiedAndGzipped.length, { units: null } );
     }
 
     for ( var i in sizes ) {
