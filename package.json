@@ -1,6 +1,6 @@
 {
-    "name": "jscale",
-    "version": "1.0.0",
+    "name": "@rmn/jscale",
+    "version": "1.1.0",
     "description": "A tiny utility tool to see the untransformed, uglified, and gzipped sizes of a file.",
     "bin": {
         "jscale": "bin/jscale"
@@ -8,6 +8,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "publishConfig": {
+        "registry": "http://npm.rmn.io"
     },
     "author": "Way Spurr-Chen <wspurrchen@rmn.com>",
     "license": "UNLICENSED",
