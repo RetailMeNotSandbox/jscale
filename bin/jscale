@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+var jscale = require( '../index' );
+var fs = require( 'fs' );
+
+var log = require( 'npmlog' );
+var argv = require( 'minimist' )( process.argv.slice(2) );
+
+if ( argv.h || argv.help ) {
+    printUsage();
+    process.exit();
+}
+
+var shouldUglify =
+    ((argv.u === undefined && argv.uglify === undefined) ||
+    (argv.u || argv.uglify)) && (argv.u !== 'false' && argv.uglify !== 'false');
+
+var data = '';
+var self;
+
+function printUsage () {
+    log.info( 'jscale usage:' );
+    log.info( '\tpipe to jscale: cat <file.js> | jscale' );
+    log.info( '\tjscale specific path: jscale <file.js>' );
+    log.info( '\tskip uglify: jscale <file.js> -u false' );
+}
+
+function withPipe(data) {
+    data = data.trim();
+    jscale( data, shouldUglify );
+}
+
+var pipeDetected = !process.stdin.isTTY;
+
+if ( pipeDetected ) {
+    self.on( 'readable', function () {
+        var chunk = this.read();
+
+        if ( chunk !== null ) {
+            data += chunk;
+        }
+    } );
+    self.on( 'end', function () {
+        withPipe( data );
+    } );
+} else {
+    gatherFileData();
+}
+
+function gatherFileData () {
+    if ( !argv._[ 0 ] ) {
+        log.error( '>:(', 'Must pass a proper file path' );
+        printUsage();
+        process.exit();
+    }
+
+    var file = fs.readFileSync( argv._[ 0 ], 'utf8' );
+    jscale( file, shouldUglify );
+}
