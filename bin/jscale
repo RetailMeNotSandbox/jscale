@@ -2,6 +2,7 @@
 var jscale = require( '../index' );
 var fs = require( 'fs' );
 
+var bytes = require( 'bytes' );
 var log = require( 'npmlog' );
 var argv = require( 'minimist' )( process.argv.slice(2) );
 
@@ -10,9 +11,7 @@ if ( argv.h || argv.help ) {
     process.exit();
 }
 
-var shouldUglify =
-    ((argv.u === undefined && argv.uglify === undefined) ||
-    (argv.u || argv.uglify)) && (argv.u !== 'false' && argv.uglify !== 'false');
+var shouldUglify = (argv.uglify || argv.u) && (argv.uglify !== false && argv.u !== false);
 
 var data = '';
 var self;
@@ -54,5 +53,15 @@ function gatherFileData () {
     }
 
     var file = fs.readFileSync( argv._[ 0 ], 'utf8' );
-    jscale( file, shouldUglify );
+    var sizes = jscale( file, shouldUglify );
+
+    console.log( sizes );
+
+    for ( var i in sizes ) {
+        if ( sizes.hasOwnProperty( i ) ) {
+            // null units for bytes makes this prettify the file size at whatever
+            // unit makes sense
+            log.info( 'fyi', i + ' size: ' + bytes( sizes[ i ], { units: null } ) );
+        }
+    }
 }

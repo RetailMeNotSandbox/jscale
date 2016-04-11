@@ -1,28 +1,33 @@
 var log = require( 'npmlog' );
 var zlib = require( 'zlib' );
-var bytes = require( 'bytes' );
 var UglifyJS = require("uglify-js");
 
 function scaleData ( input, shouldUglify ) {
     var sizes = {
-        untransformed: bytes( input.length, { units: null } )
+        untransformed: input.length
     };
     var gzipped = zlib.gzipSync( input );
-    sizes.gzipped = bytes( gzipped.length, { units: null } );
+    sizes.gzipped = gzipped.length;
 
 
     if ( shouldUglify ) {
-        var uglified = UglifyJS.minify(input, {fromString: true}).code;
-        sizes.uglified = bytes( uglified.length, { units: null } );
-        var uglifiedAndGzipped = zlib.gzipSync( uglified );
-        sizes.uglifiedAndGzipped = bytes( uglifiedAndGzipped.length, { units: null } );
-    }
-
-    for ( var i in sizes ) {
-        if ( sizes.hasOwnProperty( i ) ) {
-            log.info( 'fyi', i + ' size: ' + sizes[ i ] );
+        try {
+            var uglified = UglifyJS.minify(input, {fromString: true}).code;
+            sizes.uglified = uglified.length;
+            var uglifiedAndGzipped = zlib.gzipSync( uglified );
+            sizes.uglifiedAndGzipped = uglifiedAndGzipped.length;
+        } catch ( e ) {
+            log.error(
+                'err',
+                'UglifyJS choked on this file. Are you sure it\'s a JavaScript file? ' +
+                'You cannot uglify a non-JS file.'
+            );
+            log.error( 'err', e.message );
+            log.error( 'err', e.stack );
         }
     }
+
+    return sizes;
 }
 
 module.exports = scaleData;
