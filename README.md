@@ -22,12 +22,12 @@ From a pipe:
 cat index.js | jscale
 ```
 
-Skip uglification with -u or --uglify false (you might do this if you're trying to check out non-JS files):
+You can uglify JS files by passing `-u true` or `--uglify true`. Don't do this on non-JS files - it won't work!
 
 ```
-jscale index.js -u false
+jscale index.js -u true
 # or
-cat index.js | jscale -u false
+cat index.js | jscale -u true
 ```
 
 ### Example
