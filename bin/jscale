@@ -13,8 +13,6 @@ if ( argv.h || argv.help ) {
 
 var shouldUglify = (argv.uglify || argv.u) && (argv.uglify !== false && argv.u !== false);
 
-var data = '';
-var self;
 
 function printUsage () {
     log.info( 'jscale usage:' );
@@ -25,20 +23,22 @@ function printUsage () {
 
 function withPipe(data) {
     data = data.trim();
-    jscale( data, shouldUglify );
+    var sizes = jscale( data, shouldUglify );
+    logSizes( sizes );
 }
 
 var pipeDetected = !process.stdin.isTTY;
 
 if ( pipeDetected ) {
-    self.on( 'readable', function () {
-        var chunk = this.read();
+    process.stdin.setEncoding( 'utf8' );
+    var data = '';
 
-        if ( chunk !== null ) {
+    process.stdin.on( 'readable', function () {
+        while (chunk = process.stdin.read()) {
             data += chunk;
         }
     } );
-    self.on( 'end', function () {
+    process.stdin.on( 'end', function () {
         withPipe( data );
     } );
 } else {
@@ -54,9 +54,10 @@ function gatherFileData () {
 
     var file = fs.readFileSync( argv._[ 0 ], 'utf8' );
     var sizes = jscale( file, shouldUglify );
+    logSies( sizes );
+}
 
-    console.log( sizes );
-
+function logSizes ( sizes ) {
     for ( var i in sizes ) {
         if ( sizes.hasOwnProperty( i ) ) {
             // null units for bytes makes this prettify the file size at whatever
@@ -64,4 +65,6 @@ function gatherFileData () {
             log.info( 'fyi', i + ' size: ' + bytes( sizes[ i ], { units: null } ) );
         }
     }
+
+    process.exit( 0 );
 }

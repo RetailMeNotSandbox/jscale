@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/tests/index-tests.js --slow 750"
   },
   "publishConfig": {
     "registry": "http://npm.rmn.io"
@@ -15,13 +15,17 @@
   "author": "Way Spurr-Chen <wspurrchen@rmn.com>",
   "license": "UNLICENSED",
   "dependencies": {
-    "bytes": "^2.2.0",
-    "minimist": "^1.2.0",
-    "node-minify": "^1.3.7",
-    "npmlog": "^2.0.2",
-    "uglify-js": "^2.6.1"
+    "bytes": "2.2.0",
+    "minimist": "1.2.0",
+    "node-minify": "1.3.7",
+    "npmlog": "2.0.2",
+    "uglify-js": "2.6.1"
   },
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "chai": "3.5.0",
+    "mocha": "2.4.5"
+  },
+  "engines": {
+    "node": "^4.2.0"
   }
 }

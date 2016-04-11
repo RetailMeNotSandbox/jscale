@@ -17,13 +17,11 @@ function scaleData ( input, shouldUglify ) {
             var uglifiedAndGzipped = zlib.gzipSync( uglified );
             sizes.uglifiedAndGzipped = uglifiedAndGzipped.length;
         } catch ( e ) {
-            log.error(
-                'err',
+            throw new Error(
                 'UglifyJS choked on this file. Are you sure it\'s a JavaScript file? ' +
-                'You cannot uglify a non-JS file.'
+                'You cannot uglify a non-JS file.\n' + e.message + '\n' + e.stack
             );
-            log.error( 'err', e.message );
-            log.error( 'err', e.stack );
+            process.exit( 1 );
         }
     }
 
