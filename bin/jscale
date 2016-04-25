@@ -18,7 +18,7 @@ function printUsage () {
     log.info( 'jscale usage:' );
     log.info( '\tpipe to jscale: cat <file.js> | jscale' );
     log.info( '\tjscale specific path: jscale <file.js>' );
-    log.info( '\tskip uglify: jscale <file.js> -u false' );
+    log.info( '\tuglify: jscale <file.js> -u true' );
 }
 
 function withPipe(data) {
