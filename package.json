@@ -1,6 +1,6 @@
 {
   "name": "@rmn/jscale",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A tiny utility tool to see the untransformed, uglified, and gzipped sizes of a file.",
   "bin": {
     "jscale": "bin/jscale"
