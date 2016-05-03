@@ -54,7 +54,7 @@ function gatherFileData () {
 
     var file = fs.readFileSync( argv._[ 0 ], 'utf8' );
     var sizes = jscale( file, shouldUglify );
-    logSies( sizes );
+    logSizes( sizes );
 }
 
 function logSizes ( sizes ) {

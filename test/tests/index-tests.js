@@ -6,7 +6,7 @@ var plainFileFixture = fs.readFileSync(
 	path.resolve( __dirname, '../fixtures/plainfile.txt' ), 'utf8'
 );
 var javascriptFileFixture = fs.readFileSync(
-	path.resolve( __dirname, '../fixtures/underscore.js' ), 'utf8'
+	path.resolve( __dirname, '../fixtures/jscale.js' ), 'utf8'
 );
 
 describe( 'jscale', function () {
@@ -30,10 +30,14 @@ describe( 'jscale', function () {
 
 		it( 'weighs file sizes properly', function () {
 			var sizes = jscale( javascriptFileFixture, true );
-			expect( sizes.untransformed ).to.equal( 56064 );
-			expect( sizes.gzipped ).to.equal( 15853 );
-			expect( sizes.uglified ).to.equal( 17311 );
-			expect( sizes.uglifiedAndGzipped ).to.equal( 6083 );
+			expect( sizes.untransformed ).to.equal( 913 );
+			expect( sizes.gzipped ).to.equal( 425 );
+			expect( sizes.uglified ).to.equal( 485 );
+			expect( sizes.uglifiedAndGzipped ).to.equal( 324 );
+
+			var sizes = jscale( plainFileFixture );
+			expect( sizes.untransformed ).to.equal( 110000 );
+			expect( sizes.gzipped ).to.equal( 82199 );
 		} );
 	} );
 } );
