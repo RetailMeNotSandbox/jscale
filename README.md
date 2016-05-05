@@ -5,7 +5,7 @@ Super simple file-size checking utility that lets you check the file size of a g
 ## Installation
 
 ```
-npm install -g @rmn/jscale
+npm install -g jscale
 ```
 
 ## Usage
