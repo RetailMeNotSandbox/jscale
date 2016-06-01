@@ -47,6 +47,8 @@ info fyi uglifiedAndGzipped size: 28.46kB
 To contribute, feel free to submit a pull request. Please include a description of the changes you made, as
 well as tests for the code.
 
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 # TODOs
 
 Be able to pass custom uglify options to this, as the uglifier isn't super useful (but the gzipper is nice).

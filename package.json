@@ -7,7 +7,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/tests/index-tests.js --slow 750"
+    "test": "standard && mocha test/tests/index-tests.js --slow 750",
+    "prepublish": "npm run test"
   },
   "author": "Way Spurr-Chen <wspurrchen@rmn.com>",
   "license": "MIT",
@@ -23,6 +24,6 @@
     "mocha": "2.4.5"
   },
   "engines": {
-    "node": "^4.2.0"
+    "node": ">=4.0.0"
   }
 }
